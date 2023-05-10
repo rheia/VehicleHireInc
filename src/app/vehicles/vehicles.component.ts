@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { RentalItem } from '../dto/hire-requests/rental';
-import { Vehicle } from '../dto/product/vehicle';
 import { RentalItemService } from '../services/rentalItem.service';
 import { VehicleFormComponent } from './vehicle-form/vehicle-form.component';
 
