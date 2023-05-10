@@ -1,0 +1,47 @@
+<mat-card class="wrapper">
+    <mat-card-content>
+        <h2>New hire request</h2>
+        <form (ngSubmit)="onSubmit()" [formGroup]="form">
+
+            <mat-form-field class="full-width">
+                <mat-label>Kind</mat-label>
+                <mat-select formControlName="kindId" (selectionChange)="getItems($event)">
+                    <mat-option *ngFor="let kind of kinds" [value]="kind.id">
+                        {{kind.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+                <mat-label>rentalDate</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="rentalDate">
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+                <mat-label>customerName</mat-label>
+                <input matInput formControlName="customerName">
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+                <mat-label>customerPhoneNumber</mat-label>
+                <input matInput formControlName="customerPhoneNumber">
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+                <mat-label>Select an Item </mat-label>
+                <mat-select formControlName="itemId">
+                    <mat-option *ngFor="let item of availableItems" [value]="item.id">
+                        {{item.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <p>Complete the form to enable button.</p>
+            <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Submit</button>
+            <button mat-raised-button color="basic" (click)="onClose()">Cancel</button>
+
+        </form>
+    </mat-card-content>
+</mat-card>

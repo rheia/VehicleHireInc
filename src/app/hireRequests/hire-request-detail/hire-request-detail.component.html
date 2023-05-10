@@ -1,0 +1,65 @@
+<mat-card>
+    <mat-card-content>
+        <h2> Hire request </h2>
+        <div *ngIf="rental">
+            <div>
+                <h3>Customer detail</h3>
+                <p> Name: {{rental.customerName}} , Phone: {{rental.customerPhoneNumber}}</p>
+                <p> Date: {{rental.rentalDate}}</p>
+                <div>
+                    <mat-chip color="accent">{{rental.status === 1 ? 'New' : rental.status === 2 ? 'In
+                        progress' : rental.status === 3 ? 'Done' : 'N/A' }}</mat-chip>
+                </div>
+
+            </div>
+            <hr />
+            <div style="display: block">
+                <h3>Request details</h3>
+                <form [formGroup]="form">
+                    <div *ngIf="rental.rentalItem">
+                        <p>
+                            Item: {{rental.rentalItem.name}} ({{rental.kind!.name}}) Rate:
+                            {{rental.rentalItem.rentalRate}}
+                        </p>
+                    </div>
+                    <div *ngIf="rental.status === 2">
+                        <h3>Payment</h3>
+                        <p>
+                            <mat-form-field class="full-width">
+                                <mat-label>Fuel used (l)</mat-label>
+                                <input matInput type="number" formControlName="fuelConsumed">
+                            </mat-form-field>
+                        </p>
+                        <p>
+                            <mat-form-field class="full-width">
+                                <mat-label>Damages</mat-label>
+                                <textarea matInput formControlName="damages"></textarea>
+                            </mat-form-field>
+                        </p>
+                    </div>
+
+                    <div *ngIf="rental.status === 2">
+                        <mat-form-field class="full-width">
+                            <mat-label>Currency</mat-label>
+                            <mat-select (selectionChange)="changeCurrency($event)">
+                                <mat-option *ngFor="let symbol of symbols | keyvalue" [value]="symbol.key">
+                                    {{symbol.value}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div *ngIf="rental.status === 2">
+                        <button mat-raised-button (click)="onCalculate()">Calculate bill</button>
+                        <p>Total costs: {{totalCost}} {{currency}}</p>
+                    </div>
+
+                    <button mat-raised-button color="primary" (click)="onSubmit()">
+                        {{rental.status == 1 ? 'Start lease' :'End lease'}}
+                    </button>
+                    <button mat-raised-button (click)=" onClose()">Cancel</button>
+                </form>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>
